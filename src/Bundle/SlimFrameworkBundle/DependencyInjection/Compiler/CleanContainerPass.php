@@ -19,10 +19,7 @@ class CleanContainerPass implements CompilerPassInterface
     {
         $this->removeTranslation($container);
         $this->removeFragment($container);
-
-        /**
-         * @TODO Remove LocaleListener
-         */
+        $this->removeLocaleListener($container);
     }
 
     /**
@@ -100,5 +97,14 @@ class CleanContainerPass implements CompilerPassInterface
         $container->getParameterBag()->remove('fragment.renderer.hinclude.class');
         $container->getParameterBag()->remove('fragment.renderer.hinclude.global_template');
         $container->getParameterBag()->remove('fragment.renderer.inline.class');
+    }
+
+    /**
+     * @param ContainerBuilder $container
+     */
+    private function removeLocaleListener(ContainerBuilder $container)
+    {
+        $container->removeDefinition('locale_listener');
+        $container->getParameterBag()->remove('locale_listener.class');
     }
 }
