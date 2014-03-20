@@ -90,6 +90,7 @@ class CleanContainerPass implements CompilerPassInterface
         $container->removeDefinition('fragment.renderer.esi');
         $container->removeDefinition('fragment.renderer.hinclude');
         $container->removeDefinition('fragment.renderer.inline');
+        $container->removeDefinition('uri_signer');
 
         $container->getParameterBag()->remove('fragment.handler.class');
         $container->getParameterBag()->remove('fragment.path');
@@ -97,6 +98,7 @@ class CleanContainerPass implements CompilerPassInterface
         $container->getParameterBag()->remove('fragment.renderer.hinclude.class');
         $container->getParameterBag()->remove('fragment.renderer.hinclude.global_template');
         $container->getParameterBag()->remove('fragment.renderer.inline.class');
+        $container->getParameterBag()->remove('uri_signer.class');
     }
 
     /**
