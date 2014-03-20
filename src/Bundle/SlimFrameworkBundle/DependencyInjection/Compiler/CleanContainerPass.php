@@ -20,6 +20,7 @@ class CleanContainerPass implements CompilerPassInterface
         $this->removeTranslation($container);
         $this->removeFragment($container);
         $this->removeLocaleListener($container);
+        $this->removeSecureRandom($container);
     }
 
     /**
@@ -108,5 +109,14 @@ class CleanContainerPass implements CompilerPassInterface
     {
         $container->removeDefinition('locale_listener');
         $container->getParameterBag()->remove('locale_listener.class');
+    }
+
+    /**
+     * @param ContainerBuilder $container
+     */
+    private function removeSecureRandom(ContainerBuilder $container)
+    {
+        $container->removeDefinition('security.secure_random');
+        $container->getParameterBag()->remove('security.secure_random.class');
     }
 }
