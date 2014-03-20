@@ -18,12 +18,10 @@ class CleanContainerPass implements CompilerPassInterface
     public function process(ContainerBuilder $container)
     {
         $this->removeTranslation($container);
+        $this->removeFragment($container);
 
         /**
-         * @TODO
-         * Remove services with tag 'kernel.fragment_renderer'
-         *
-         * Remove LocaleListener
+         * @TODO Remove LocaleListener
          */
     }
 
@@ -84,5 +82,23 @@ class CleanContainerPass implements CompilerPassInterface
             $container->removeDefinition($definitionId);
             $container->getParameterBag()->remove($definitionId . '.class');
         }
+    }
+
+    /**
+     * @param ContainerBuilder $container
+     */
+    private function removeFragment(ContainerBuilder $container)
+    {
+        $container->removeDefinition('fragment.handler');
+        $container->removeDefinition('fragment.renderer.esi');
+        $container->removeDefinition('fragment.renderer.hinclude');
+        $container->removeDefinition('fragment.renderer.inline');
+
+        $container->getParameterBag()->remove('fragment.handler.class');
+        $container->getParameterBag()->remove('fragment.path');
+        $container->getParameterBag()->remove('fragment.renderer.esi.class');
+        $container->getParameterBag()->remove('fragment.renderer.hinclude.class');
+        $container->getParameterBag()->remove('fragment.renderer.hinclude.global_template');
+        $container->getParameterBag()->remove('fragment.renderer.inline.class');
     }
 }
